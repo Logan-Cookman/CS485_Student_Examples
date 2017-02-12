@@ -23,7 +23,7 @@ PacString::PacString(const char *pszString)
 	{
 		this->mpszData [i] = pszString [i];
 	}
-	this->mpszData[length] = NULL;
+	this->mpszData[length - 1] = NULL;
 }
 
 PacString::PacString(const PacString &rcData)
@@ -37,12 +37,12 @@ PacString::PacString(const PacString &rcData)
 	{
 		this->mpszData [i] = rcData.mpszData [i];
 	}
-	this->mpszData[length] = NULL;
+	this->mpszData[length - 1] = NULL;
 }
 
 PacString::~PacString()
 {
-	delete [] this->mpszData;
+	delete[] mpszData;
 }
 
 PacString& PacString::operator=(PacString rcData)
@@ -54,7 +54,7 @@ PacString& PacString::operator=(PacString rcData)
 
 	swap (this->mpszData, rcData.mpszData);
 
-	this->mpszData[length] = NULL;
+	this->mpszData[length - 1] = NULL;
 	return *this;
 }
 
@@ -93,7 +93,7 @@ PacString& PacString::operator+=(const PacString &rcData)
 		this->mpszData[i] = pszNewData[i];
 	}
 
-	this->mpszData[newLength] = NULL;
+	this->mpszData[newLength - 1] = NULL;
 
 	delete [] pszNewData;
 
@@ -102,7 +102,7 @@ PacString& PacString::operator+=(const PacString &rcData)
 
 PacString PacString::operator+(const PacString &rcData) const
 {
-	/*int thisLength = static_cast <int> (strlen(this->mpszData));
+	int thisLength = static_cast <int> (strlen(this->mpszData));
 	int dataLength = static_cast <int> (strlen(rcData.mpszData));
 	int newLength = thisLength + dataLength + 1;
 	PacString cNewData;
@@ -118,31 +118,7 @@ PacString PacString::operator+(const PacString &rcData) const
 		cNewData.mpszData [j + thisLength] = rcData.mpszData [j];
 	}
 
-	cNewData.mpszData[newLength] = NULL;
+	cNewData.mpszData [newLength - 1] = NULL;
 
-	return cNewData;*/
-	string s, s2;
-	stringstream ss;
-	PacString cNewData;
-
-	char *temp = new char;
-
-	strcpy_s(temp, strlen(mpszData + 1) * sizeof(char), mpszData);
-	strcpy_s(temp + strlen(mpszData), (strlen(rcData.mpszData) + 1) * sizeof(char), rcData.mpszData);
-
-
-/*
-	ss << mpszData;
-	ss >> s;
-	ss.clear();
-	ss << rcData.mpszData;
-	ss >> s2;
-
-	s += s2;
-
-	ss << s2;
-
-	ss >> cNewData.mpszData;*/
-
-	return temp;
+	return cNewData;
 }
